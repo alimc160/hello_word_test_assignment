@@ -31,4 +31,17 @@ class UserPrediction extends Model
     {
         return $this->hasMany(UserPredictionCountry::class,'user_prediction_id');
     }
+
+    /**
+     * @param $name
+     * @param $userId
+     * @return mixed
+     */
+    public function getPredectionsByName($name,$userId)
+    {
+        return $this::where('name',$name)
+            ->where('user_id',$userId)
+            ->with('countries')
+            ->first();
+    }
 }

@@ -39,12 +39,14 @@ class HomeController extends Controller
     public function searchPrediction(Request $request)
     {
         $user = Auth::user();
-        $this->predictionService->getPredictions($request->all(),$user);
-        return redirect()->back();
+        $link=$this->predictionService->getPredictions($request->all(),$user);
+        return redirect()->back()->with('link',$link);
     }
 
     public function getUserSearches(Request $request)
     {
-        dd($request->all());
+        $user = Auth::user();
+        $response=$this->predictionService->searchPredectionByName($request['name'],$user);
+        return view('user_searches',compact('response'));
     }
 }
